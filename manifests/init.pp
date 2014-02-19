@@ -97,13 +97,16 @@ class nodejs(
       ensure  => present,
       require => Anchor['nodejs::repo']
     }
+    $proxy_require = Package['npm']
+  } else {
+    $proxy_require = Package['nodejs']
   }
 
   if $proxy {
     exec { 'npm_proxy':
       command => "npm config set proxy ${proxy}",
       path    => $::path,
-      require => Package['npm'],
+      require => $proxy_require,
     }
   }
 
