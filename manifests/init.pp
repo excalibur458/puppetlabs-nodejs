@@ -107,6 +107,7 @@ class nodejs(
       command => "npm config set proxy ${proxy}",
       path    => $::path,
       require => $proxy_require,
+      unless  => "npm config get proxy | grep ${proxy}",
     }
   }
 
